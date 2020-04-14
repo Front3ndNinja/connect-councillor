@@ -109,6 +109,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $status = 'success';
                     $statusMsg = "complain posted successfully.";
+                    
+                   $query = "SELECT `numPostedComplain` FROM `userinfo` WHERE userName = '$userName'";
+                    $result = $conn->query($query);
+                    if ($result->num_rows > 0)
+                    {
+                    while ($row = $result->fetch_assoc())
+        {
+            
+            $totalComplain = $row["numPostedComplain"] + 1;
+                        
+                    
+             
+        }
+                    $query = "UPDATE `userinfo` SET `numPostedComplain`='$totalComplain' WHERE userName = '$userName'";
+                    $result = $conn->query($query);
+                   
+                    
+                        
+                    }
+                    
+        
                 }
                 else
                 {
