@@ -22,7 +22,7 @@ if (empty($_SESSION["username"])) {
     <!--       navigation menu -->
     <?php include('userNav.html') ?>
    
-    <?php 
+    <?php
     
     $conn = new mysqli("localhost", "root", "", "connectcouncillor");
     if ($conn->connect_error) {
@@ -33,13 +33,12 @@ if (empty($_SESSION["username"])) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          $title = $row['budgetTitle'];
-          $amount = $row['amount'];
-          $description = $row['description'];
-          echo "<h3>Title:  $title </h3>";
-          echo "<h4>Amount:  $amount </h4>";
-          echo "<h4>Description:  $description </h4>";
-          
+            $title = $row['budgetTitle'];
+            $amount = $row['amount'];
+            $description = $row['description'];
+            echo "<h3>Title:  $title </h3>";
+            echo "<h4>Amount:  $amount </h4>";
+            echo "<h4>Description:  $description </h4>";
         }
     } else {
         $error = "Username or Password is invalid";

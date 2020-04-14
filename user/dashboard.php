@@ -33,12 +33,10 @@ if (empty($_SESSION["username"])) {
     $result = $conn->query($sql2);
 
     if ($result->num_rows > 0) {
-
         while ($row = $result->fetch_assoc()) {
             $problemSolved = $row["COUNT(complainStatus)"];
         }
-    } 
-    else {
+    } else {
         $error = "Username or Password is invalid";
     }
 

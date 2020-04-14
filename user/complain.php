@@ -79,7 +79,6 @@ if (empty($_SESSION["username"])) {
         $result = $conn->query($getCurrentID);
 
         if ($result->num_rows > 0) {
-
             while ($row = $result->fetch_assoc()) {
                 $currentID = $row["complainid"];
             }
