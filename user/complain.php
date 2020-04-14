@@ -108,12 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 if ($insert)
                 {
                     $status = 'success';
-                    $statusMsg = "File uploaded successfully.";
+                    $statusMsg = "complain posted successfully.";
                 }
                 else
                 {
 
-                    $statusMsg = "File upload failed, please try again.";
+                    $statusMsg = "complain post failed, please try again.";
                 }
             }
             else
