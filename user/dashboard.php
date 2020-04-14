@@ -1,9 +1,9 @@
 <?php
 session_start();
-
+$userName = $_SESSION["username"];
 if (empty($_SESSION["username"]))
 {
-    header("Location: login.php"); // Redirecting To Home Page
+    header("Location: ../index.php"); // Redirecting To Home Page
     
 }
 
@@ -16,17 +16,21 @@ else
     {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT * FROM userinfo WHERE username='test'";
+    $sql = "SELECT * FROM userinfo WHERE username='$userName'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
     {
         while ($row = $result->fetch_assoc())
         {
-            $testName = $row["userName"];
-            $wardNumber = $row["ward"];
+            $userName = $row["userName"];
+            $userAge = $row["age"];
+            $userBloodGroup = $row["bloodGroup"];
+            $userAddress = $row["address"];
             $totalComplain = $row["numPostedComplain"];
-            $userImage = $row["userImage"];
+            $wardNumber = $row["ward"];
+            $_SESSION["wardNumber"] = $wardNumber;
+            $userImage = $row["userImage"];    
         }
 
     }
@@ -52,34 +56,7 @@ else
 
     <body>
         <!--       navigation menu -->
-        <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-            <a class="navbar-brand" href="#"><img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="test.html">Complain</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Post Issue</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Budget</a>
-                    </li>
-
-                </ul>
-                <a href="../logout.php">
-                    <button class="btn btn-danger my-2 my-sm-0" type="submit">Logout</button>
-                </a>
-            </div>
-        </nav>
+         <?php include('userNav.html') ?>
         <!--        user homepage -->
         <section class="userInfo margin-top">
             <div class="container">
@@ -92,8 +69,11 @@ else
                     
                     
                     <div class="col-md-5">
-                        <h1><?php echo $testName; ?></h1>
-                        <span><?php echo $wardNumber; ?></span>
+                        <h1>Name: <?php echo $userName; ?></h1>
+                        <h1>Age: <?php echo $userAge; ?></h1>
+                        <h1>Blood Group: <?php echo $userBloodGroup; ?></h1>
+                        <h1>Address: <?php echo $userAddress; ?></h1>
+                        <span>Ward Number: <?php echo $wardNumber; ?></span>
                     </div>
 
 
@@ -102,7 +82,7 @@ else
                         <div class="card" style="width: 12rem;">
                             <img class="card-img-top" src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $testName; ?></h5>
+                                <h5 class="card-title"><?php echo $userName; ?></h5>
                                 
                                 <h6 class="card-title"><?php echo $wardNumber; ?></h6>
                             </div>

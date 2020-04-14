@@ -26,7 +26,7 @@ if (isset($_POST['submit']))
         {
 
             $_SESSION["username"] = $username;
-            $_SESSION["password"] = $password;
+            
         }
         else
         {

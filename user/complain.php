@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     // If file upload form is submitted
     $userName = $_SESSION["username"];
+    $userWardNumber = $_SESSION["wardNumber"];
     $complainTitle = $_REQUEST["complainTitle"];
     $complain = $_REQUEST["postedComplain"];
     $status = $statusMsg = '';
@@ -102,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
                 // Insert image content into database
                 
-                $insert = $conn->query("INSERT into complain (`userName`,`title`, `postedComplain`, `complainImage`, `userWardNumber`) VALUES ('$userName','$complainTitle','$complain','$imgContent', NOW())");
+                $insert = $conn->query("INSERT into complain (`userName`,`title`, `postedComplain`, `complainImage`, `userWardNumber`) VALUES ('$userName','$complainTitle','$complain','$imgContent', '$userWardNumber')");
 
                 if ($insert)
                 {
