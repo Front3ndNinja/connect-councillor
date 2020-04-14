@@ -31,7 +31,8 @@ if (empty($_SESSION["username"])) {
                             <label for="exampleInputTitle">
                                 <h5>Title</h5>
                             </label>
-                            <input type="text" class="form-control" name="complainTitle" aria-describedby="emailHelp"> </div>
+                            <input type="text" class="form-control" name="complainTitle" aria-describedby="emailHelp">
+                        </div>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">
                                 <h5>Category</h5>
@@ -71,6 +72,20 @@ if (empty($_SESSION["username"])) {
         $category = $_REQUEST["category"];
         $complain = $_REQUEST["postedComplain"];
         $status = $statusMsg = '';
+
+        // get current complain id from database
+
+        $getCurrentID = "SELECT `complainid` FROM `complain`";
+        $result = $conn->query($getCurrentID);
+
+        if ($result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $currentID = $row["complainid"];
+            }
+            $newPostID = $currentID + 1;
+        }
+
         if (isset($_REQUEST["submit"])) {
             $status = 'error';
             if (!empty($_FILES["image"]["name"])) {
@@ -91,18 +106,20 @@ if (empty($_SESSION["username"])) {
 
                     // Insert image content into database
 
-                    $insert = $conn->query("INSERT into complain (`userName`,`title`, `postedComplain`, `complainImage`, `userWardNumber`,`category`) VALUES ('$userName','$complainTitle','$complain','$imgContent', '$userWardNumber','$category')");
+                    $insert = $conn->query("INSERT into complain (`userName`,`title`, `postedComplain`, `complainImage`, `userWardNumber`,`complainid`,`category`) VALUES ('$userName','$complainTitle','$complain','$imgContent', '$userWardNumber','$newPostID','$category')");
 
                     if ($insert) {
                         $status = 'success';
                         $statusMsg = "complain posted successfully.";
-
+                        // get number of complain posted in dashboard
                         $query = "SELECT `numPostedComplain` FROM `userinfo` WHERE userName = '$userName'";
                         $result = $conn->query($query);
+
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 $totalComplain = $row["numPostedComplain"] + 1;
                             }
+                            // update number of complain posted in dashboard
                             $query = "UPDATE `userinfo` SET `numPostedComplain`='$totalComplain' WHERE userName = '$userName'";
                             $result = $conn->query($query);
                         }
@@ -124,9 +141,12 @@ if (empty($_SESSION["username"])) {
     <!--        user statstic section-->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
