@@ -31,15 +31,14 @@ if (empty($_SESSION["username"])) {
 
     $sql2 = "SELECT COUNT(complainStatus) FROM `complain` WHERE userName = '$userName' and complainStatus = 1";
     $result = $conn->query($sql2);
-    
+
     if ($result->num_rows > 0) {
 
         while ($row = $result->fetch_assoc()) {
             $problemSolved = $row["COUNT(complainStatus)"];
         }
-        
-        
-    } else {
+    } 
+    else {
         $error = "Username or Password is invalid";
     }
 
@@ -56,7 +55,8 @@ if (empty($_SESSION["username"])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </header>
 <link rel="stylesheet" href="../css/main.css">
 
@@ -69,7 +69,8 @@ if (empty($_SESSION["username"])) {
             <div class="row">
 
                 <div class="col-md-3">
-                    <img class="card-img-top" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($userImage); ?>" />
+                    <img class="card-img-top"
+                        src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($userImage); ?>" />
                 </div>
 
 
@@ -81,18 +82,7 @@ if (empty($_SESSION["username"])) {
                     <h1>Address: <?php echo $userAddress; ?></h1>
                     <span>Ward Number: <?php echo $wardNumber; ?></span>
                 </div>
-                <!--
-                    <div class="col-md-6 offset-4">
-                        <div class="card" style="width: 12rem;">
-                            <img class="card-img-top" src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $userName; ?></h5>
-                                
-                                <h6 class="card-title"><?php echo $wardNumber; ?></h6>
-                            </div>
-                        </div>
-                    </div>
--->
+
             </div>
         </div>
     </section>
@@ -122,7 +112,7 @@ if (empty($_SESSION["username"])) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Remaining Problem</h5>
-                            <p class="card-text"><?php echo $totalComplain-$problemSolved; ?></p>
+                            <p class="card-text"><?php echo $totalComplain - $problemSolved; ?></p>
                         </div>
                     </div>
                 </div>
@@ -131,9 +121,15 @@ if (empty($_SESSION["username"])) {
     </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
