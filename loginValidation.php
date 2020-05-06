@@ -19,7 +19,12 @@ if (isset($_POST['submit']))
         {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM login WHERE username='" . $username . "' AND password='" . $password . "'";
+       // $sql = "SELECT * FROM login WHERE username='" . $username . "' AND password='" . $password . "'";
+
+
+
+        $sql = "SELECT * FROM login WHERE username='" . $username . "' AND password='" . $password . "' AND userAccountState= '1'";
+
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0)
