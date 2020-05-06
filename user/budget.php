@@ -41,7 +41,6 @@ if (empty($_SESSION["username"])) {
 
     function getdata($wardNumber)
     {
-
         $conn = new mysqli("localhost", "root", "", "connectcouncillor");
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
