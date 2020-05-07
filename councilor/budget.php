@@ -53,9 +53,11 @@ if (empty($_SESSION["username"])) {
                 $title = $row['budgetTitle'];
                 $amount = $row['amount'];
                 $description = $row['description'];
+                $status = $row['status'];
                 echo "<h3>Title:  $title </h3>";
                 echo "<h4>Amount:  $amount </h4>";
                 echo "<h4>Description:  $description </h4>";
+                echo "<h4>Description:  $status </h4>";
                 echo "<br> <br>";
             }
         } else {
