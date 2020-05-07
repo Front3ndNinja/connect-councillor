@@ -20,7 +20,7 @@ if (empty($_SESSION["username"])) {
             $userAge = $row["age"];
             $userBloodGroup = $row["bloodGroup"];
             $userAddress = $row["address"];
-            $totalComplain = $row["numPostedComplain"];
+           // $totalComplain = $row["numPostedComplain"];
             $wardNumber = $row["ward"];
             $_SESSION["wardNumber"] = $wardNumber;
             $userImage = $row["userImage"];
@@ -29,9 +29,24 @@ if (empty($_SESSION["username"])) {
         $error = "Username or Password is invalid";
     }
 
+    //total problem 
+
+    
+    $sql3 = "SELECT COUNT(userWardNumber) FROM `complain` WHERE userWardNumber = '$wardNumber'";
+    $result3 = $conn->query($sql3);
+
+    if ($result3->num_rows > 0) {
+        while ($row = $result3->fetch_assoc()) {
+            $totalComplain = $row["COUNT(userWardNumber)"];
+        }
+    } else {
+        $error = "Something is wrong";
+    }
+
+
     // problem solved number
 
-    $sql2 = "SELECT COUNT(complainStatus) FROM `complain` WHERE userName = '$userName' and complainStatus = 1";
+    $sql2 = "SELECT COUNT(complainStatus) FROM `complain` WHERE userWardNumber = '$wardNumber' and complainStatus = 1";
     $result = $conn->query($sql2);
 
     if ($result->num_rows > 0) {
@@ -39,7 +54,7 @@ if (empty($_SESSION["username"])) {
             $problemSolved = $row["COUNT(complainStatus)"];
         }
     } else {
-        $error = "Username or Password is invalid";
+        $error = "Something is wrong";
     }
 
 
@@ -77,7 +92,7 @@ if (empty($_SESSION["username"])) {
 
                 <div class="col-md-5">
                     <h1>Name: <?php echo $userName; ?></h1>
-                    <h1>Name: <?php echo $user ?></h1>
+                    <h1>Role: <?php echo $user ?></h1>
                     <h1>Age: <?php echo $userAge; ?></h1>
                     <h1>Blood Group: <?php echo $userBloodGroup; ?></h1>
                     <h1>Address: <?php echo $userAddress; ?></h1>
@@ -103,7 +118,7 @@ if (empty($_SESSION["username"])) {
                     <div class="card">
                         <div class="card-body">
 
-                            <h5 class="card-title">Got Solved</h5>
+                            <h5 class="card-title">Solved</h5>
                             <p class="card-text"><?php echo $problemSolved; ?></p>
                         </div>
                     </div>
