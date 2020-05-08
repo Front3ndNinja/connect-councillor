@@ -1,6 +1,5 @@
 <?php
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $bid = $_REQUEST["bid"];
