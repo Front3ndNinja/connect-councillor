@@ -38,6 +38,7 @@ if (empty($_SESSION["username"])) {
                             $title = $row['title'];
                             $complain = $row['postedComplain'];
                             $id = $row['complainId'];
+                            $userImage = $row['complainImage'];
                             $status = $row['complainStatus'];
                             if ($status == 0) {
                                 $stat = "false";
@@ -46,8 +47,10 @@ if (empty($_SESSION["username"])) {
                             }
                             echo "<h6>Title:  $title </h6>";
                             echo "<h6>ID:  $id </h6>";
+                            echo "<h6>Description:  $complain </h6>";
                             echo "<h6>Status:  $stat </h6>";
                             echo "<br>";
+                           
                         }
                     }
                     ?>
@@ -55,7 +58,7 @@ if (empty($_SESSION["username"])) {
 
 
                 <div class="col-md-12">
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <form method="post"  name="myform2"  onsubmit="return validateform2()" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="form-group">
                             <input type="text" name="post_id" id="post_id" class="form-control" placeholder="post ID" />
                         </div>
@@ -77,7 +80,7 @@ if (empty($_SESSION["username"])) {
                             $postID = $_REQUEST["post_id"];
 
                             $_SESSION["postI"] = $postID;
-                            
+
                             $conn = new mysqli("localhost", "root", "", "connectcouncillor");
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
@@ -119,15 +122,13 @@ if (empty($_SESSION["username"])) {
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            
+
                             $_SESSION["uname"] = $row['name'];
-                            
                         }
                     }
                     ?>
 
-
-                    <form method="post" action="addcomment.php">
+                    <form name="myform" method="post" onsubmit="return validateform()" action="addcomment.php">
 
                         <div class="form-group">
                             <textarea name="comment_content" id="comment_content" class="form-control" placeholder="Enter Comment" rows="5"></textarea>
@@ -138,7 +139,7 @@ if (empty($_SESSION["username"])) {
                         </div>
                     </form>
 
-                   
+
 
                 </div>
 
@@ -146,6 +147,31 @@ if (empty($_SESSION["username"])) {
         </div>
     </section>
 
+
+    <script>
+        function validateform() {
+            var title = document.myform.comment_content.value;
+            var postid = document.myform2.post_id.value;
+           
+
+            if (title == null || title == "") {
+                alert("comment can't be blank");
+                return false;
+            }
+            else if (postid == null || postid == "") {
+                alert("post id can't be blank");
+                return false;
+            }
+        }
+
+        function validateform2() {
+            var postid = document.myform2.post_id.value;
+        if (postid == null || postid == "") {
+                alert("post id can't be blank");
+                return false;
+            }
+        }
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
