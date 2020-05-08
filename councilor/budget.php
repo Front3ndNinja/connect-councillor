@@ -32,7 +32,7 @@ if (empty($_SESSION["username"])) {
                     ?>
                 </div>
                 <div class="col-md-12">
-                    <form method="post" action="budgetfeedback.php">
+                    <form method="post" name="myform"  onsubmit="return validateform()" action="budgetfeedback.php">
 
 
                         <div class="form-row">
@@ -43,7 +43,6 @@ if (empty($_SESSION["username"])) {
                             <div class="form-group col-md-4">
                                 <label for="inputState">Status</label>
                                 <select name="inputState" class="form-control">
-                                    <option selected>Choose...</option>
                                     <option>work in progress</option>
                                     <option>finished</option>
                                 </select>
@@ -51,7 +50,7 @@ if (empty($_SESSION["username"])) {
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Sign in</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
 
                    
@@ -62,6 +61,23 @@ if (empty($_SESSION["username"])) {
     </section>
 
 
+
+    <script>  
+function validateform(){  
+var title=document.myform.bid.value;  
+var status=document.myform.inputState.value;  
+  
+if (title==null || title==""){  
+  alert("title can't be blank");  
+  return false;  
+}else if(status == null || status == ""){  
+  alert("status can't be blank");  
+  return false;  
+  }  
+}  
+</script>  
+
+
     <?php
 
     function getdata($wardNumber)
@@ -70,7 +86,7 @@ if (empty($_SESSION["username"])) {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber'";
+        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber' AND `status` != 'pending'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
