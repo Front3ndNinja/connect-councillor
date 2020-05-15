@@ -26,7 +26,7 @@ if (empty($_SESSION["username"])) {
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-3">
-                    <form method="post" name="complain" onsubmit="return validateform()"  action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+                    <form method="post" name="complain" onsubmit="return validateform()" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleInputTitle">
                                 <h5>Title</h5>

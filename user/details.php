@@ -76,12 +76,20 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <input type="hidden" name="comment_id" id="comment_id" value="0" />
                             <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
+
                         </div>
                     </form>
+
+
                     <span id="comment_message"></span>
                     <br />
                     <div id="display_comment"></div>
                 </div>
+
+                <div class="col-md-12 text-center">
+                <input style="margin-bottom:10px " type="submit" class="btn btn-success statusupdate" value="Mark Solved" />
+                </div>
+               
 </body>
 
 </html>
@@ -115,7 +123,7 @@ $(document).ready(function() {
             url: "../comment/fetch_comment.php",
             method: "POST",
             data: ({
-                post_id: <?php echo $_GET['id'] ?>
+                post_id: <?php echo $_GET['id']?>
             }),
             success: function(data) {
                 $('#display_comment').html(data);
@@ -128,6 +136,17 @@ $(document).ready(function() {
         $('#comment_id').val(comment_id);
         $('#comment_name').focus();
     });
+
+    $('.statusupdate').click(function() {
+        $.ajax({
+            url: "../comment/status.php",
+            method: "POST",
+            data: ({
+                post_id: <?php echo $_GET['id']?>
+            }),
+        });
+    });
+
 
 });
 </script>

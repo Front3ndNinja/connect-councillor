@@ -40,9 +40,9 @@ if (empty($_SESSION["username"])) {
                             $id = $row['complainId'];
                             $status = $row['complainStatus'];
                             if ($status == 0) {
-                                $stat = "false";
+                                $stat = "Pending";
                             } else {
-                                $stat = "true";
+                                $stat = "Solved";
                             }
                             echo "<a href='details.php?id=$id'>$title</a>";
                             echo "<h6>Status:  $stat </h6>";
