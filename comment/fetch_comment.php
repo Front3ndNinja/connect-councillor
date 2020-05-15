@@ -4,8 +4,6 @@
 
 $postid = $_POST["post_id"];
 
-echo $postid;
-
 $connect = new PDO('mysql:host=localhost;dbname=connectcouncillor', 'root', '');
 
 $query = "
