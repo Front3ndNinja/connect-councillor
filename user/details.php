@@ -1,9 +1,14 @@
 <?php
 session_start();
-$userName = $_SESSION["username"];
-$ward = $_SESSION["wardNumber"];
-if (empty($_SESSION["username"])) {
-    header("Location: ../index.php"); // Redirecting To Home Page
+if(isset($_GET['id'])){
+    $userName = $_SESSION["username"];
+    $ward = $_SESSION["wardNumber"];
+    if (empty($_SESSION["username"])) {
+        header("Location: ../index.php"); // Redirecting To Home Page
+    }
+}
+else{
+    header("Location: feedback.php");
 }
 
 ?>
