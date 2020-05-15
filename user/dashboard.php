@@ -1,6 +1,8 @@
 <?php
 session_start();
 $userName = $_SESSION["username"];
+$user = $_SESSION["userStatus"];
+
 if (empty($_SESSION["username"])) {
     header("Location: ../index.php"); // Redirecting To Home Page
 } else {
@@ -75,6 +77,7 @@ if (empty($_SESSION["username"])) {
 
                 <div class="col-md-5">
                     <h1>Name: <?php echo $userName; ?></h1>
+                    <h1>Name: <?php echo $user ?></h1>
                     <h1>Age: <?php echo $userAge; ?></h1>
                     <h1>Blood Group: <?php echo $userBloodGroup; ?></h1>
                     <h1>Address: <?php echo $userAddress; ?></h1>

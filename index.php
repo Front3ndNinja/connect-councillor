@@ -2,7 +2,17 @@
 include('loginValidation.php');
 
 if (isset($_SESSION['username'])) {
-    header("location: user/dashboard.php");
+    $userStatus = $_SESSION['userStatus'];
+    if($userStatus == "user"){
+        header("location: user/dashboard.php");
+    }
+    else if($userStatus == "councilor"){
+        header("location: councilor/dashboard.php");
+    }
+    else{
+        header("location: admin/dashboard.php");
+    }
+    
 }
 ?>
 <!DOCTYPE html>
