@@ -26,7 +26,7 @@ if (empty($_SESSION["username"])) {
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-3">
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+                    <form method="post" name="complain" onsubmit="return validateform()"  action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleInputTitle">
                                 <h5>Title</h5>
@@ -137,7 +137,28 @@ if (empty($_SESSION["username"])) {
         echo $statusMsg;
     }
     ?>
-    <!--        user statstic section-->
+    
+    <script>
+        function validateform() {
+           
+            var title = document.complain.complainTitle.value;
+            var category = document.complain.category.value;
+            var des = document.complain.postedComplain.value;
+
+            if (title == null || title == "") {
+                alert("title can't be blank");
+                return false;
+            } else if (category == null || category == "") {
+                alert("category can't be blank");
+                return false;
+            }
+            else if (des == null || des == "") {
+                alert("desciption can't be blank");
+                return false;
+            }
+        }
+    </script>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
