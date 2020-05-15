@@ -2,11 +2,15 @@
 
 //fetch_comment.php
 
+$postid = $_POST["post_id"];
+
+echo $postid;
+
 $connect = new PDO('mysql:host=localhost;dbname=connectcouncillor', 'root', '');
 
 $query = "
 SELECT * FROM comment 
-WHERE parent_comment_id = '0' 
+WHERE parent_comment_id = '0' AND postID = '$postid'
 ORDER BY comment_id DESC
 ";
 
