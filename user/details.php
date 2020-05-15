@@ -62,7 +62,7 @@ else{
                     <form method="POST" id="comment_form">
 
                         <div class="form-group">
-                            <input type="text" name="post_id" id="post_id" class="form-control" placeholder="postid" value="<?php echo $_GET['id'] ?>" />
+                            <input type="text" name="post_id" id="post_id" class="form-control"  readonly="readonly" placeholder="postid" value="<?php echo $_GET['id'] ?>" />
                         </div>
                         <div class="form-group">
                             <input type="text" name="comment_name" id="comment_name" class="form-control" placeholder="Enter Name" />
