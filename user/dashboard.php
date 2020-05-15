@@ -5,47 +5,7 @@ $user = $_SESSION["userStatus"];
 
 if (empty($_SESSION["username"])) {
     header("Location: ../index.php"); // Redirecting To Home Page
-} else {
-    //for displaying user info
-    $conn = new mysqli("localhost", "root", "", "connectcouncillor");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT * FROM userinfo WHERE username='$userName'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $userName = $row["userName"];
-            $userAge = $row["age"];
-            $userBloodGroup = $row["bloodGroup"];
-            $userAddress = $row["address"];
-            $totalComplain = $row["numPostedComplain"];
-            $wardNumber = $row["ward"];
-            $_SESSION["wardNumber"] = $wardNumber;
-            $userImage = $row["userImage"];
-        }
-    } else {
-        $error = "Username or Password is invalid";
-    }
-
-    // problem solved number
-
-    $sql2 = "SELECT COUNT(complainStatus) FROM `complain` WHERE userName = '$userName' and complainStatus = 1";
-    $result = $conn->query($sql2);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $problemSolved = $row["COUNT(complainStatus)"];
-        }
-    } else {
-        $error = "Username or Password is invalid";
-    }
-
-
-    $conn->close();
-}
-
+} 
 ?>
 
 <!DOCTYPE html>
@@ -68,12 +28,50 @@ if (empty($_SESSION["username"])) {
         <div class="container">
             <div class="row">
 
+                <?php 
+                $conn = new mysqli("localhost", "root", "", "connectcouncillor");
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                $sql = "SELECT * FROM userinfo WHERE username='$userName'";
+                $result = $conn->query($sql);
+            
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $userName = $row["userName"];
+                        $userAge = $row["age"];
+                        $userBloodGroup = $row["bloodGroup"];
+                        $userAddress = $row["address"];
+                        $totalComplain = $row["numPostedComplain"];
+                        $wardNumber = $row["ward"];
+                        $_SESSION["wardNumber"] = $wardNumber;
+                        $userImage = $row["userImage"];
+                    }
+                } else {
+                    $error = "Username or Password is invalid";
+                }
+            
+                // problem solved number
+            
+                $sql2 = "SELECT COUNT(complainStatus) FROM `complain` WHERE userName = '$userName' and complainStatus = 1";
+                $result = $conn->query($sql2);
+            
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $problemSolved = $row["COUNT(complainStatus)"];
+                    }
+                } else {
+                    $error = "Username or Password is invalid";
+                }
+            
+            
+                $conn->close();
+            
+            ?>
                 <div class="col-md-3">
                     <img class="card-img-top"
                         src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($userImage); ?>" />
                 </div>
-
-
 
                 <div class="col-md-5">
                     <h1>Name: <?php echo $userName; ?></h1>
