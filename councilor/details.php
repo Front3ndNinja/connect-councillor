@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-6 offset-3">
+                <div class="col-md-6 margin-top offset-3">
                     <?php
                     $conn = new mysqli("localhost", "root", "", "connectcouncillor");
 
@@ -45,19 +45,24 @@ if (isset($_GET['id'])) {
                             $complain = $row['postedComplain'];
                             $id = $row['complainId'];
                             $status = $row['complainStatus'];
+                            $complainImage = $row["complainImage"];
                             if ($status == 0) {
                                 $stat = "false";
                             } else {
                                 $stat = "true";
                             }
-                            echo "$title</a>";
-                            echo "<h6>:  $complain </h6>";
+                            echo "<h3>Title: $title</h3>";
+                            echo "<h6>Description: $complain </h6>";
                             echo "<br>";
                         }
                     }
                     ?>
                 </div>
 
+                <div class="col-md-3">
+                    <img class="card-img-top"
+                        src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($complainImage); ?>" />
+                </div>
 
                 <div class="container">
                     <form method="POST" id="comment_form">
