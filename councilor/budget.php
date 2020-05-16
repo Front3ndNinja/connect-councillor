@@ -68,12 +68,9 @@ var title=document.myform.bid.value;
 var status=document.myform.inputState.value;  
   
 if (title==null || title==""){  
-  alert("title can't be blank");  
+  alert("id can't be blank");  
   return false;  
-}else if(status == null || status == ""){  
-  alert("status can't be blank");  
-  return false;  
-  }  
+} 
 }  
 </script>  
 
