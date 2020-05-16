@@ -9,8 +9,11 @@ if (isset($_SESSION['username'])) {
     else if($userStatus == "councilor"){
         header("location: councilor/dashboard.php");
     }
-    else{
+    else if ($userStatus == "admin"){
         header("location: admin/dashboard.php");
+    }
+    else{
+        echo "something went wrong";
     }
     
 }
