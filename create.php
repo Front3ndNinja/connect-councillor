@@ -127,7 +127,7 @@
 
                     $insert = $conn->query("INSERT into userinfo (`name`,`userName`, `age`, `bloodgroup`, `address`,`ward`,`userImage`,`voterid`) VALUES ('$name','$uname','$age','$bloodgroup', '$address','$ward','$imgContent','$voterID')");
 
-                    $insert = $conn->query("INSERT INTO `login`(`username`, `password`) VALUES ('$uname','$password')");
+                    $insert = $conn->query("INSERT INTO `login`(`username`, `password`, `userStatus`) VALUES ('$uname','$password','user')");
 
 
 
