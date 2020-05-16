@@ -16,6 +16,7 @@ if (empty($_SESSION["username"])) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $name = $row["name"];
             $userName = $row["userName"];
             $userAge = $row["age"];
             $userBloodGroup = $row["bloodGroup"];
@@ -91,7 +92,7 @@ if (empty($_SESSION["username"])) {
 
 
                 <div class="col-md-5">
-                    <h1>Name: <?php echo $userName; ?></h1>
+                    <h1>Name: <?php echo $name; ?></h1>
                     <h1>Role: <?php echo $user ?></h1>
                     <h1>Age: <?php echo $userAge; ?></h1>
                     <h1>Blood Group: <?php echo $userBloodGroup; ?></h1>
