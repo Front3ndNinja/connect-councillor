@@ -26,152 +26,88 @@ if (empty($_SESSION["username"])) {
     <section>
         <div class="container">
             <div class="row">
+
                 <div class="col-md-6 offset-3">
                     <?php
-                    $conn = new mysqli("localhost", "root", "", "connectcouncillor");
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $conn = new mysqli("localhost", "root", "", "connectcouncillor");
 
-                    $query = "SELECT * FROM `complain` WHERE `userWardNumber` = '$ward'";
-                    $result = $conn->query($query);
+                        $f = $_REQUEST["category"];
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $title = $row['title'];
-                            $complain = $row['postedComplain'];
-                            $id = $row['complainId'];
-                            $userImage = $row['complainImage'];
-                            $status = $row['complainStatus'];
-                            if ($status == 0) {
-                                $stat = "false";
-                            } else {
-                                $stat = "true";
-                            }
-                            echo "<h6>Title:  $title </h6>";
-                            echo "<h6>ID:  $id </h6>";
-                            echo "<h6>Description:  $complain </h6>";
-                            echo "<h6>Status:  $stat </h6>";
-                            echo "<br>";
-                           
-                        }
-                    }
-                    ?>
-                </div>
+                        $query = "SELECT * FROM `complain` WHERE `userWardNumber` = '$ward' and `category` = '$f' ";
+                        // echo $query;
+                        $result = $conn->query($query);
 
-
-                <div class="col-md-12">
-                    <form method="post"  name="myform2"  onsubmit="return validateform2()" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <div class="form-group">
-                            <input type="text" name="post_id" id="post_id" class="form-control" placeholder="post ID" />
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" name="submit" class="btn btn-primary">Load Comment</button>
-                    </form>
-                </div>
-
-                <?php getComment() ?>
-
-                <div class="col-md-6">
-                    <?php
-                    function getComment()
-                    {
-
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                            $postID = $_REQUEST["post_id"];
-
-                            $_SESSION["postI"] = $postID;
-
-                            $conn = new mysqli("localhost", "root", "", "connectcouncillor");
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
-                            $sql = "SELECT * FROM `comment` WHERE `postID`='$postID'";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $name = $row['comment_sender_name'];
-                                    $date = $row['date'];
-                                    $comment = $row['comment'];
-
-                                    echo '
-          <div class="panel panel-default">
-           <div class="panel-heading">By <b>' . $row["comment_sender_name"] . '</b> on <i>' . $row["date"] . '</i></div>
-           <div class="panel-body">' . $row["comment"] . '</div>
-          </div>';
-
-                                    echo "<br>";
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $title = $row['title'];
+                                $complain = $row['postedComplain'];
+                                $id = $row['complainId'];
+                                $userImage = $row['complainImage'];
+                                $status = $row['complainStatus'];
+                                if ($status == 0) {
+                                    $stat = "pending";
+                                } else {
+                                    $stat = "solved";
                                 }
-                            } else {
-                                $error = "Username or Password is invalid";
+                                echo "<a href='details.php?id=$id'>$title</a>";
+                                echo "<h6>Status:  $stat </h6>";
+                                echo "<br>";
                             }
-                            $conn->close();
+                        }
+                    }
+                    else{
+                        $conn = new mysqli("localhost", "root", "", "connectcouncillor");
+
+                        $query = "SELECT * FROM `complain` WHERE `userWardNumber` = '$ward'";
+                        // echo $query;
+                        $result = $conn->query($query);
+
+                        if ($result->num_rows > 0) {
+                            echo "<h1>all problem</h1>";
+                            echo "<br>";
+                            while ($row = $result->fetch_assoc()) {
+                                $title = $row['title'];
+                                $complain = $row['postedComplain'];
+                                $id = $row['complainId'];
+                                $userImage = $row['complainImage'];
+                                $status = $row['complainStatus'];
+                                if ($status == 0) {
+                                    $stat = "pending";
+                                } else {
+                                    $stat = "solved";
+                                }
+                                echo "<a href='details.php?id=$id'>$title</a>";
+                                echo "<h6>Status:  $stat </h6>";
+                                echo "<br>";
+                            }
                         }
                     }
                     ?>
+
                 </div>
 
-
-                <div class="col-md-12">
-
-                    <?php
-                    $conn = new mysqli("localhost", "root", "", "connectcouncillor");
-
-                    $query = "SELECT * FROM `userinfo` WHERE `username` = '$userName'";
-                    $result = $conn->query($query);
-
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-
-                            $_SESSION["uname"] = $row['name'];
-                        }
-                    }
-                    ?>
-
-                    <form name="myform" method="post" onsubmit="return validateform()" action="addcomment.php">
-
+                <div class="col-md-6 offset-3">
+                    <form method="post" name="complain" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <div class="form-group">
-                            <textarea name="comment_content" id="comment_content" class="form-control" placeholder="Enter Comment" rows="5"></textarea>
+                            <label for="exampleFormControlSelect1">
+                                <h5>Filter By Category</h5>
+                            </label>
+                            <select class="form-control" name="category" id="exampleFormControlSelect1">
+                                <option>water problem</option>
+                                <option>road problem</option>
+                                <option>Suggestion</option>
+                                <option>Need Goverment Paper</option>
+                                <option>Other issue</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" name="comment_id" id="comment_id" value="0" />
-                            <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
-                        </div>
+
+                        <button type="submit" name="submit" class="btn btn-primary">Filter</button>
                     </form>
-
-
-
                 </div>
-
             </div>
         </div>
     </section>
-
-
-    <script>
-        function validateform() {
-            var title = document.myform.comment_content.value;
-            var postid = document.myform2.post_id.value;
-           
-
-            if (title == null || title == "") {
-                alert("comment can't be blank");
-                return false;
-            }
-            else if (postid == null || postid == "") {
-                alert("post id can't be blank");
-                return false;
-            }
-        }
-
-        function validateform2() {
-            var postid = document.myform2.post_id.value;
-        if (postid == null || postid == "") {
-                alert("post id can't be blank");
-                return false;
-            }
-        }
-    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
