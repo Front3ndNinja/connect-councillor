@@ -18,6 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7 offset-2">
+                    <h2 style="margin-top: 100px;">Create An Account</h2>
                     <form method="post" name="create" onsubmit="return validateform()" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <form>
                             <div class="form-row">
@@ -72,7 +73,12 @@
                         </form>
 
                     </form>
+                    <div class="col-md-6 margin-top">
+                    <p>Already have an account?</p>
+                    <a href="index.php">Login</a>
                 </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -80,10 +86,7 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <p>Already have an account?</p>
-                    <a href="index.php">Login</a>
-                </div>
+               
             </div>
         </div>
     </section>
@@ -91,6 +94,7 @@
     <!--          code to upload image  -->
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
         $conn = new mysqli("localhost", "root", "", "connectcouncillor");
 
         // If file upload form is submitted
@@ -127,8 +131,13 @@
 
                     $insert = $conn->query("INSERT into userinfo (`name`,`userName`, `age`, `bloodgroup`, `address`,`ward`,`userImage`,`voterid`) VALUES ('$name','$uname','$age','$bloodgroup', '$address','$ward','$imgContent','$voterID')");
 
-                    $insert = $conn->query("INSERT INTO `login`(`username`, `password`, `userStatus`) VALUES ('$uname','$password','user')");
+                    $conn->close();
+                    
+                    $conn2 = new mysqli("localhost", "root", "", "connectcouncillor");
 
+                    $conn2->query("INSERT INTO `login`(`username`, `password`, `userStatus`) VALUES ('$uname','$password','user')");
+
+                    $conn2->close();
 
 
                     if ($insert) {
@@ -144,6 +153,7 @@
                 $statusMsg = 'Please select an image file to upload.';
             }
         }
+        
 
         // Display status message
         echo $statusMsg;
