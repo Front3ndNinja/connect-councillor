@@ -86,10 +86,12 @@ if (empty($_SESSION["username"])) {
                 $amount = $row['amount'];
                 $description = $row['description'];
                 $bid = $row['bid'];
+                $ward = $row['wardNumber'];
                 $status = $row['status'];
                 echo "<h3>Title:  $title </h3>";
                 echo "<h3>ID:  $bid </h3>";
                 echo "<h4>Description:  $description </h4>";
+                echo "<h4>Description:  $ward </h4>";
                 echo "<h4>Status:  $status </h4>";
                 echo "<br> <br>";
             }
