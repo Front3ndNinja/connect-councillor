@@ -79,13 +79,13 @@ if (empty($_SESSION["username"])) {
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $userName = $row['username'];
-                echo $userName;
+               
 
                 $sql2 = "SELECT * FROM userinfo WHERE username='$userName'";
                 $result2 = $conn->query($sql2);
 
                 if ($result2->num_rows > 0) {
-                    echo "ok";
+                   
                     while ($row = $result2->fetch_assoc()) {
                         $name = $row["name"];
                         $uname = $row["userName"];

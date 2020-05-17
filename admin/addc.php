@@ -80,6 +80,7 @@
     <!--          code to upload image  -->
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
         $conn = new mysqli("localhost", "root", "", "connectcouncillor");
 
         // If file upload form is submitted
@@ -116,8 +117,13 @@
 
                     $insert = $conn->query("INSERT into userinfo (`name`,`userName`, `age`, `bloodgroup`, `address`,`ward`,`userImage`,`voterid`) VALUES ('$name','$uname','$age','$bloodgroup', '$address','$ward','$imgContent','$voterID')");
 
-                    $insert = $conn->query("INSERT INTO `login`(`username`, `password`, `userStatus`,`userAccountState`) VALUES ('$uname','$password','councilor',1)");
+                    $conn->close();
+                    
+                    $conn2 = new mysqli("localhost", "root", "", "connectcouncillor");
 
+                    $conn2->query("INSERT INTO `login`(`username`, `password`, `userStatus`,`userAccountState`) VALUES ('$uname','$password','councilor',1)");
+
+                    $conn2->close();
 
 
                     if ($insert) {
@@ -133,6 +139,7 @@
                 $statusMsg = 'Please select an image file to upload.';
             }
         }
+        
 
         // Display status message
         echo $statusMsg;

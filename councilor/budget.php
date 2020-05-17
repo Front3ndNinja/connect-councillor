@@ -83,7 +83,7 @@ if (title==null || title==""){
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber' AND `status` != 'pending'";
+        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
