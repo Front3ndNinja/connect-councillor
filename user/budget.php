@@ -45,7 +45,7 @@ if (empty($_SESSION["username"])) {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber'";
+        $sql = "SELECT * FROM budget WHERE `wardNumber`='$wardNumber' AND `status` != 'pending'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -53,9 +53,11 @@ if (empty($_SESSION["username"])) {
                 $title = $row['budgetTitle'];
                 $amount = $row['amount'];
                 $description = $row['description'];
+                $status = $row['status'];
                 echo "<h3>Title:  $title </h3>";
                 echo "<h4>Amount:  $amount </h4>";
                 echo "<h4>Description:  $description </h4>";
+                echo "<h4>Description:  $status </h4>";
                 echo "<br> <br>";
             }
         } else {
